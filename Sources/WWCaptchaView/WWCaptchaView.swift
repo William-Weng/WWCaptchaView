@@ -18,6 +18,7 @@ public protocol WWCaptchaViewDelegate: AnyObject {
 }
 
 // MARK: - 小工具
+@IBDesignable
 open class WWCaptchaView: UIView {
     
     private var stringModel: RandomStringModel?     // 跟文字相關的設定值
