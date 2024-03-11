@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWCaptchaView",
       "state" : {
-        "revision" : "1a1d27e7782d425e16e5e705527b6dab190ee4b9",
-        "version" : "1.0.0"
+        "revision" : "7c6da2649e02d133f3c7e2116cb22fda40986fb4",
+        "version" : "1.0.1"
       }
     },
     {

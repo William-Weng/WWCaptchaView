@@ -6,6 +6,8 @@
 - [CAPTCHA - Completely Automated Public Turing test to tell Computers and Humans Apart](https://zh.wikipedia.org/zh-tw/验证码)
 - [全自動區分電腦和人類的圖靈測試（英語：Completely Automated Public Turing test to tell Computers and Humans Apart，簡稱CAPTCHA），又稱驗證碼](https://www.jianshu.com/p/209f08f369a1)
 
+![Example.png](./Example.png)
+
 ![Example.gif](./Example.gif)
 
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
@@ -25,13 +27,14 @@ dependencies: [
 ### Example
 ```swift
 import UIKit
+import WWPrint
 import WWCaptchaView
 
 // MARK: - ViewController
 final class ViewController: UIViewController {
     
     @IBOutlet weak var captchaLabel: UILabel!
-    @IBOutlet weak var captchaView: WWCaptchaView!
+    @IBOutlet weak var captchaView: MyCaptchaView!
 
     private let stringModel: WWCaptchaView.RandomStringModel = .init(
         digits: "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890甲乙丙丁戊己庚辛壬癸",
@@ -49,13 +52,36 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         captchaView.configure(delegate: self, stringModel: stringModel, lineModel: lineModel)
     }
+    
+    override public func prepareForInterfaceBuilder() {
+        super.prepareForInterfaceBuilder()
+        captchaView.prepareForInterfaceBuilder()
+    }
 }
 
 // MARK: - WWCaptchaViewDelegate
 extension ViewController: WWCaptchaViewDelegate {
+    func captcha(view: WWCaptchaView, string: String?) { captchaLabel.text = string }
+}
+
+// MARK: - 可視化WWCaptchaView
+final class MyCaptchaView: WWCaptchaView {
     
-    func captcha(view: WWCaptchaView, string: String?) {
-        captchaLabel.text = string
+    override func prepareForInterfaceBuilder() {
+        
+        let stringModel: WWCaptchaView.RandomStringModel = .init(
+            digits: "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890甲乙丙丁戊己庚辛壬癸",
+            length: 4,
+            font: UIFont.systemFont(ofSize: 56),
+            upperBound: 10
+        )
+        
+        let lineModel: WWCaptchaView.RandomLineModel = .init(
+            count: 5,
+            width: 1.0
+        )
+        
+        self.configure(delegate: nil, stringModel: stringModel, lineModel: lineModel)
     }
 }
 ```
