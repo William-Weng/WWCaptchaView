@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "WWCaptchaView", targets: ["WWCaptchaView"]),
     ],
     targets: [
-        .target(name: "WWCaptchaView"),
+        .target(name: "WWCaptchaView", resources: [.copy("Privacy")]),
     ],
     swiftLanguageVersions: [
         .v5
