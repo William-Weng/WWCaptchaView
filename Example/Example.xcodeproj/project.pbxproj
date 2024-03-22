@@ -13,9 +13,10 @@
 		3DBCD87B26F198EF00522E3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87926F198EF00522E3B /* Main.storyboard */; };
 		3DBCD87D26F198F300522E3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87C26F198F300522E3B /* Assets.xcassets */; };
 		3DBCD88026F198F300522E3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87E26F198F300522E3B /* LaunchScreen.storyboard */; };
-		8114FCF42B9EF3FF0055DE62 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 8114FCF32B9EF3FF0055DE62 /* WWCaptchaView */; };
 		816460DA2B9EC21300F47218 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 816460D92B9EC21300F47218 /* WWCaptchaView */; };
 		816460ED2B9EF2EE00F47218 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 816460EC2B9EF2EE00F47218 /* WWCaptchaView */; };
+		81C331702BAD2FF500A49D0D /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81C3316F2BAD2FF500A49D0D /* WWCaptchaView */; };
+		81C331732BAD543700A49D0D /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81C331722BAD543700A49D0D /* WWCaptchaView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +36,8 @@
 			files = (
 				3DAC9C1927016E78006663C2 /* WWPrint in Frameworks */,
 				816460ED2B9EF2EE00F47218 /* WWCaptchaView in Frameworks */,
-				8114FCF42B9EF3FF0055DE62 /* WWCaptchaView in Frameworks */,
+				81C331702BAD2FF500A49D0D /* WWCaptchaView in Frameworks */,
+				81C331732BAD543700A49D0D /* WWCaptchaView in Frameworks */,
 				816460DA2B9EC21300F47218 /* WWCaptchaView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,7 +134,8 @@
 				3DAC9C1827016E78006663C2 /* WWPrint */,
 				816460D92B9EC21300F47218 /* WWCaptchaView */,
 				816460EC2B9EF2EE00F47218 /* WWCaptchaView */,
-				8114FCF32B9EF3FF0055DE62 /* WWCaptchaView */,
+				81C3316F2BAD2FF500A49D0D /* WWCaptchaView */,
+				81C331722BAD543700A49D0D /* WWCaptchaView */,
 			);
 			productName = Example;
 			productReference = 3DBCD87026F198EF00522E3B /* Example.app */;
@@ -164,7 +167,7 @@
 			mainGroup = 3DBCD86726F198EF00522E3B;
 			packageReferences = (
 				3DAC9C1727016E78006663C2 /* XCRemoteSwiftPackageReference "WWPrint" */,
-				8114FCF22B9EF3FF0055DE62 /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
+				81C331712BAD543700A49D0D /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
 			);
 			productRefGroup = 3DBCD87126F198EF00522E3B /* Products */;
 			projectDirPath = "";
@@ -416,12 +419,12 @@
 				minimumVersion = 1.3.0;
 			};
 		};
-		8114FCF22B9EF3FF0055DE62 /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
+		81C331712BAD543700A49D0D /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWCaptchaView";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.0.4;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -432,17 +435,21 @@
 			package = 3DAC9C1727016E78006663C2 /* XCRemoteSwiftPackageReference "WWPrint" */;
 			productName = WWPrint;
 		};
-		8114FCF32B9EF3FF0055DE62 /* WWCaptchaView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8114FCF22B9EF3FF0055DE62 /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
-			productName = WWCaptchaView;
-		};
 		816460D92B9EC21300F47218 /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWCaptchaView;
 		};
 		816460EC2B9EF2EE00F47218 /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = WWCaptchaView;
+		};
+		81C3316F2BAD2FF500A49D0D /* WWCaptchaView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWCaptchaView;
+		};
+		81C331722BAD543700A49D0D /* WWCaptchaView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81C331712BAD543700A49D0D /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
 			productName = WWCaptchaView;
 		};
 /* End XCSwiftPackageProductDependency section */

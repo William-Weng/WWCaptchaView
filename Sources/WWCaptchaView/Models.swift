@@ -17,12 +17,14 @@ public extension WWCaptchaView {
         var length: Int         // 驗證碼長度
         var font: UIFont        // 驗證碼字型
         var upperBound: Int     // 驗證碼文字浮動大小
+        var color: UIColor      // 驗證碼文字顏色
         
-        public init(digits: String, length: Int, font: UIFont, upperBound: Int) {
+        public init(digits: String, length: Int, font: UIFont, upperBound: Int, color: UIColor) {
             self.digits = digits
             self.length = length
             self.font = font
             self.upperBound = upperBound
+            self.color = color
         }
     }
     

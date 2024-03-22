@@ -35,12 +35,13 @@ final class ViewController: UIViewController {
     
     @IBOutlet weak var captchaLabel: UILabel!
     @IBOutlet weak var captchaView: WWCaptchaView!
-
+    
     private let stringModel: WWCaptchaView.RandomStringModel = .init(
         digits: "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890甲乙丙丁戊己庚辛壬癸",
-        length: 4,
-        font: UIFont.systemFont(ofSize: 56),
-        upperBound: 10
+        length: 3,
+        font: .systemFont(ofSize: 56),
+        upperBound: 10,
+        color: .black
     )
     
     private let lineModel: WWCaptchaView.RandomLineModel = .init(

@@ -46,7 +46,7 @@ public extension WWCaptchaView {
     ///   - delegate: WWCaptchaViewDelegate?
     ///   - stringModel: RandomStringModel
     ///   - lineModel: RandomLineModel
-    func configure(delegate: WWCaptchaViewDelegate? = nil, stringModel: RandomStringModel = .init(digits: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", length: 4, font: UIFont.systemFont(ofSize: 18), upperBound: 5), lineModel: RandomLineModel = .init(count: 6, width: 1.0)) {
+    func configure(delegate: WWCaptchaViewDelegate? = nil, stringModel: RandomStringModel = .init(digits: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", length: 4, font: UIFont.systemFont(ofSize: 18), upperBound: 5, color: .black), lineModel: RandomLineModel = .init(count: 6, width: 1.0)) {
         
         self.stringModel = stringModel
         self.lineModel = lineModel
@@ -103,15 +103,20 @@ private extension WWCaptchaView {
         
         let estimateCharSize = estimateCharacterSize("龘", font: stringModel.font)
         let charSize = characterSize(string: string, rect: rect, estimateCharacterSize: estimateCharSize)
-        
+                
         for index in 0..<string.count {
             
             let point = characterPoint(with: index, totalCount: string.count, rect: rect, size: charSize)
             let text = string as NSString
             let char = text.character(at: index)
             let character = NSString(format: "%C", char)
+            let font = randomFont(stringModel: stringModel)
+            let attributes: [NSAttributedString.Key : Any] = [
+                .font: font,
+                .foregroundColor: stringModel.color
+            ]
             
-            character.draw(at: point, withAttributes: [NSAttributedString.Key.font : randomFont(stringModel: stringModel)])
+            character.draw(at: point, withAttributes: attributes)
         }
     }
     
@@ -124,10 +129,10 @@ private extension WWCaptchaView {
         guard let context = UIGraphicsGetCurrentContext() else { return }
                 
         for _ in 0..<lineModel.count {
-                       
+            
             let startPoint = randomPoint(rect.size)
             let endPoint = randomPoint(rect.size)
-
+            
             context.move(to: startPoint)
             context.addLine(to: endPoint)
             
