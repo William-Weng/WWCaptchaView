@@ -27,6 +27,10 @@ open class WWCaptchaView: UIView {
         super.draw(rect)
         redraw(rect: rect)
     }
+    
+    deinit {
+        delegate = nil
+    }
 }
 
 // MARK: - 公開函式
@@ -46,7 +50,7 @@ public extension WWCaptchaView {
     
     /// [重新繪製驗證碼](https://zh.wikipedia.org/zh-tw/验证码)
     /// - Parameter captchaString: 自訂的驗證碼
-    func redrawCaptcha(_ captchaString: String? = nil) {
+    func generate(captchaString: String? = nil) {
         
         defer { setNeedsDisplay() }
         
@@ -95,12 +99,15 @@ private extension WWCaptchaView {
             let estimateCharSize = font._estimateCharacterSize()
             let charSize = characterSize(string: string, rect: rect, estimateCharacterSize: estimateCharSize)
             let point = characterPoint(with: index, totalCount: string.count, rect: rect, size: charSize)
+            let frame = CGRect(origin: point, size: charSize)
             
             switch stringModel.textColorType {
-            case .mono(let color, let isTransform): monoColorTextSetting(character, frame: .init(origin: point, size: charSize), font: font, textColor: color, isTransform: isTransform)
-            case .random(let isTransform): monoColorTextSetting(character, frame: .init(origin: point, size: charSize), font: font, textColor: UIColor._random(), isTransform: isTransform)
-            case .gradient(let colors, let isTransform): gradientColorTextSetting(character, frame: .init(origin: point, size: charSize), font: font, colors: colors, isTransform: isTransform)
+            case .mono(let color, let isTransform): monoColorTextSetting(character, frame: frame, font: font, textColor: color, isTransform: isTransform)
+            case .random(let isTransform): monoColorTextSetting(character, frame: frame, font: font, textColor: UIColor._random(), isTransform: isTransform)
+            case .gradient(let colors, let isTransform): gradientColorTextSetting(character, frame: frame, font: font, colors: colors, isTransform: isTransform)
             }
+            
+            delegate?.captchaView(self, character: character as String, at: index, frame: frame)
         }
     }
     

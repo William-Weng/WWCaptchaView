@@ -30,7 +30,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         captchaView.configure(delegate: self, stringModel: stringModel, lineModel: lineModel)
-        captchaView.redrawCaptcha("8庚M")
+        captchaView.generate(captchaString: "8庚M")
     }
 }
 
@@ -38,7 +38,11 @@ final class ViewController: UIViewController {
 extension ViewController: WWCaptchaViewDelegate {
     
     func captchaView(_ captchaView: WWCaptchaView, didTouched touchs: Set<UITouch>) {
-        captchaView.redrawCaptcha()
+        captchaView.generate()
+    }
+    
+    func captchaView(_ captchaView: WWCaptchaView, character: String, at index: Int, frame: CGRect) {
+        print("[\(index)] \(character) => \(frame)")
     }
     
     func captchaView(_ captchaView: WWCaptchaView, string: String?) {

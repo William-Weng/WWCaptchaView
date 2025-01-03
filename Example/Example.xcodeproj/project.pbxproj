@@ -19,7 +19,9 @@
 		81FB67552D2797D600466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67542D2797D600466B2A /* WWCaptchaView */; };
 		81FB675B2D279DFC00466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB675A2D279DFC00466B2A /* WWCaptchaView */; };
 		81FB67612D27BD5500466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67602D27BD5500466B2A /* WWCaptchaView */; };
-		81FB67642D27CA0C00466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67632D27CA0C00466B2A /* WWCaptchaView */; };
+		81FB67672D27CB5600466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67662D27CB5600466B2A /* WWCaptchaView */; };
+		81FB676D2D27D23F00466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB676C2D27D23F00466B2A /* WWCaptchaView */; };
+		81FB67702D27D25700466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB676F2D27D25700466B2A /* WWCaptchaView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,11 +41,13 @@
 			files = (
 				816460ED2B9EF2EE00F47218 /* WWCaptchaView in Frameworks */,
 				81FB67612D27BD5500466B2A /* WWCaptchaView in Frameworks */,
-				81FB67642D27CA0C00466B2A /* WWCaptchaView in Frameworks */,
+				81FB67672D27CB5600466B2A /* WWCaptchaView in Frameworks */,
 				81C331702BAD2FF500A49D0D /* WWCaptchaView in Frameworks */,
 				81FB675B2D279DFC00466B2A /* WWCaptchaView in Frameworks */,
+				81FB676D2D27D23F00466B2A /* WWCaptchaView in Frameworks */,
 				8136592A2D2691C600AEADAD /* WWCaptchaView in Frameworks */,
 				81FB67552D2797D600466B2A /* WWCaptchaView in Frameworks */,
+				81FB67702D27D25700466B2A /* WWCaptchaView in Frameworks */,
 				816460DA2B9EC21300F47218 /* WWCaptchaView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,7 +148,9 @@
 				81FB67542D2797D600466B2A /* WWCaptchaView */,
 				81FB675A2D279DFC00466B2A /* WWCaptchaView */,
 				81FB67602D27BD5500466B2A /* WWCaptchaView */,
-				81FB67632D27CA0C00466B2A /* WWCaptchaView */,
+				81FB67662D27CB5600466B2A /* WWCaptchaView */,
+				81FB676C2D27D23F00466B2A /* WWCaptchaView */,
+				81FB676F2D27D25700466B2A /* WWCaptchaView */,
 			);
 			productName = Example;
 			productReference = 3DBCD87026F198EF00522E3B /* Example.app */;
@@ -175,7 +181,7 @@
 			);
 			mainGroup = 3DBCD86726F198EF00522E3B;
 			packageReferences = (
-				81FB67622D27CA0C00466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
+				81FB676E2D27D25700466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
 			);
 			productRefGroup = 3DBCD87126F198EF00522E3B /* Products */;
 			projectDirPath = "";
@@ -421,12 +427,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		81FB67622D27CA0C00466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
+		81FB676E2D27D25700466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWCaptchaView";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.1;
+				minimumVersion = 1.1.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -460,9 +466,17 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WWCaptchaView;
 		};
-		81FB67632D27CA0C00466B2A /* WWCaptchaView */ = {
+		81FB67662D27CB5600466B2A /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 81FB67622D27CA0C00466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
+			productName = WWCaptchaView;
+		};
+		81FB676C2D27D23F00466B2A /* WWCaptchaView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWCaptchaView;
+		};
+		81FB676F2D27D25700466B2A /* WWCaptchaView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81FB676E2D27D25700466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
 			productName = WWCaptchaView;
 		};
 /* End XCSwiftPackageProductDependency section */

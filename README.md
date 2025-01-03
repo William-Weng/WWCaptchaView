@@ -11,20 +11,21 @@
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWCaptchaView.git", .upToNextMajor(from: "1.1.1"))
+    .package(url: "https://github.com/William-Weng/WWCaptchaView.git", .upToNextMajor(from: "1.1.3"))
 ]
 ```
 
 ### [Function - 可用函式](https://zh.wikipedia.org/zh-tw/验证码)
 |函式|功能|
 |-|-|
-|configure(delegate:stringModel:lineModel)|[設定初始值](https://www.jianshu.com/p/209f08f369a1)|
-|redrawCaptcha(_:)|重新繪製驗證碼|
+|configure(delegate:stringModel:lineModel:)|[設定初始值](https://www.jianshu.com/p/209f08f369a1)|
+|generate(captchaString:)|生成驗證碼|
 
 ### [WWCaptchaViewDelegate](https://ezgif.com/video-to-webp)
 |函式|功能|
 |-|-|
 |captchaView(_:didTouched:)|畫面被點到|
+|captchaView(_:character:at:frame:)|取得各別驗證碼的相關訊息|
 |captchaView(_:string:)|取得驗證碼|
 
 ### Example
@@ -53,14 +54,18 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         captchaView.configure(delegate: self, stringModel: stringModel, lineModel: lineModel)
-        captchaView.redrawCaptcha("8庚M")
+        captchaView.generate(captchaString: "8庚M")
     }
 }
 
 extension ViewController: WWCaptchaViewDelegate {
     
     func captchaView(_ captchaView: WWCaptchaView, didTouched touchs: Set<UITouch>) {
-        captchaView.redrawCaptcha()
+        captchaView.generate()
+    }
+        
+    func captchaView(_ captchaView: WWCaptchaView, character: String, at index: Int, frame: CGRect) {
+        print("[\(index)] \(character) => \(frame)")
     }
     
     func captchaView(_ captchaView: WWCaptchaView, string: String?) {
