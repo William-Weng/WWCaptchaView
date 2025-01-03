@@ -102,61 +102,47 @@ private extension WWCaptchaView {
             let frame = CGRect(origin: point, size: charSize)
             
             switch stringModel.textColorType {
-            case .mono(let color, let isTransform): monoColorTextSetting(character, frame: frame, font: font, textColor: color, isTransform: isTransform)
-            case .random(let isTransform): monoColorTextSetting(character, frame: frame, font: font, textColor: UIColor._random(), isTransform: isTransform)
-            case .gradient(let colors, let isTransform): gradientColorTextSetting(character, frame: frame, font: font, colors: colors, isTransform: isTransform)
+            case .mono(let color, let isTransform): monoColorTextSetting(with: index, character: character, frame: frame, font: font, textColor: color, isTransform: isTransform)
+            case .random(let isTransform): monoColorTextSetting(with: index, character: character, frame: frame, font: font, textColor: UIColor._random(), isTransform: isTransform)
+            case .gradient(let colors, let isTransform): gradientColorTextSetting(with: index, character: character, frame: frame, font: font, colors: colors, isTransform: isTransform)
             }
-            
-            delegate?.captchaView(self, character: character as String, at: index, frame: frame)
         }
     }
     
     /// 單一顏色的文字處理
     /// - Parameters:
+    ///   - index: Int
     ///   - character: NSString
     ///   - frame: CGRect
     ///   - font: UIFont
     ///   - textColor: UIColor
     ///   - isTransform: Bool
-    func monoColorTextSetting(_ character: NSString, frame: CGRect, font: UIFont, textColor: UIColor, isTransform: Bool) {
-        
-        if !isTransform { drawCharacter(character, at: frame.origin, font: font, textColor: textColor); return }
+    func monoColorTextSetting(with index: Int, character: NSString, frame: CGRect, font: UIFont, textColor: UIColor, isTransform: Bool) {
         
         let label = characterLabel(character, frame: frame, font: font, textColor: textColor, isTransform: isTransform)
         captchaLabels.append(label)
         layer.addSublayer(label.layer)
+                
+        delegate?.captchaView(self, character: character as String, at: index, frame: label.frame)
     }
     
     /// 漸層顏色的文字處理
     /// - Parameters:
+    ///   - index: Int
     ///   - character: NSString
     ///   - frame: CGRect
     ///   - font: UIFont
     ///   - colors: [UIColor]
     ///   - isTransform: Bool
-    func gradientColorTextSetting(_ character: NSString, frame: CGRect, font: UIFont, colors: [UIColor], isTransform: Bool) {
+    func gradientColorTextSetting(with index: Int, character: NSString, frame: CGRect, font: UIFont, colors: [UIColor], isTransform: Bool) {
         
         let label = characterGradientLabel(character, frame: frame, font: font, colors: colors, isTransform: isTransform)
         captchaLabels.append(label)
         layer.addSublayer(label.layer)
-    }
-    
-    /// 繪出單色文字
-    /// - Parameters:
-    ///   - character: NSString
-    ///   - point: CGPoint
-    ///   - font: UIFont
-    ///   - textColor: UIColor
-    func drawCharacter(_ character: NSString, at point: CGPoint, font: UIFont, textColor: UIColor) {
         
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: textColor,
-        ]
-        
-        character.draw(at: point, withAttributes: attributes)
+        delegate?.captchaView(self, character: character as String, at: index, frame: label.frame)
     }
-    
+        
     /// 產生文字Label (Z軸旋轉)
     /// - Parameters:
     ///   - character: NSString
@@ -253,7 +239,7 @@ private extension WWCaptchaView {
         let randomSize = randomSize(size)
         let x = randomSize.width + (rect.size.width / CGFloat(totalCount) * CGFloat(index))
         let y = randomSize.height
-                
+        
         return CGPoint(x: x, y: y)
     }
     
@@ -265,7 +251,7 @@ private extension WWCaptchaView {
     /// - Returns: CGSize
     func characterSize(string: String, rect: CGRect, estimateCharacterSize: CGSize) -> CGSize {
         
-        let width = (rect.size.width / CGFloat(string.count)) - CGFloat(estimateCharacterSize.width)
+        let width = rect.size.width / CGFloat(string.count) - estimateCharacterSize.width
         let height = rect.size.height - estimateCharacterSize.height
         
         return CGSize(width: width, height: height)

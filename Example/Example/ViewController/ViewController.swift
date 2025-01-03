@@ -27,6 +27,8 @@ final class ViewController: UIViewController {
         width: 1.0
     )
     
+    private var info: [String: CGRect] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         captchaView.configure(delegate: self, stringModel: stringModel, lineModel: lineModel)
