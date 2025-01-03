@@ -19,8 +19,7 @@ dependencies: [
 |函式|功能|
 |-|-|
 |configure(delegate:stringModel:lineModel)|[設定初始值](https://www.jianshu.com/p/209f08f369a1)|
-|redrawCaptcha()|重新繪製驗證碼|
-|redrawCaptchaString(_:)|重新繪製自訂驗證碼|
+|redrawCaptcha(_:)|重新繪製驗證碼|
 
 ### [WWCaptchaViewDelegate](https://ezgif.com/video-to-webp)
 |函式|功能|
@@ -43,7 +42,7 @@ final class ViewController: UIViewController {
         length: 3,
         font: .systemFont(ofSize: 24),
         upperBound: 36,
-        textColorType: .random
+        textColorType: .random(true)
     )
     
     private let lineModel: WWCaptchaView.RandomLineModel = .init(
@@ -54,7 +53,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         captchaView.configure(delegate: self, stringModel: stringModel, lineModel: lineModel)
-        captchaView.redrawCaptcha()
+        captchaView.redrawCaptcha("8庚M")
     }
 }
 

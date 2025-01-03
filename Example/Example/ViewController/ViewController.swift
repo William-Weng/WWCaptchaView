@@ -19,7 +19,7 @@ final class ViewController: UIViewController {
         length: 3,
         font: .systemFont(ofSize: 24),
         upperBound: 36,
-        textColorType: .random
+        textColorType: .random(true)
     )
     
     private let lineModel: WWCaptchaView.RandomLineModel = .init(
@@ -30,7 +30,7 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         captchaView.configure(delegate: self, stringModel: stringModel, lineModel: lineModel)
-        captchaView.redrawCaptcha()
+        captchaView.redrawCaptcha("8庚M")
     }
 }
 

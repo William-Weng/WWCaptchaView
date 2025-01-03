@@ -37,7 +37,7 @@ public extension WWCaptchaView {
     ///   - delegate: WWCaptchaViewDelegate?
     ///   - stringModel: RandomStringModel
     ///   - lineModel: RandomLineModel
-    func configure(delegate: WWCaptchaViewDelegate? = nil, stringModel: RandomStringModel = .init(digits: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", length: 4, font: UIFont.systemFont(ofSize: 18), upperBound: 5, textColorType: .mono(.black)), lineModel: RandomLineModel = .init(count: 6, width: 1.0)) {
+    func configure(delegate: WWCaptchaViewDelegate? = nil, stringModel: RandomStringModel = .init(digits: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", length: 4, font: UIFont.systemFont(ofSize: 18), upperBound: 5, textColorType: .mono(.black, false)), lineModel: RandomLineModel = .init(count: 6, width: 1.0)) {
         
         self.stringModel = stringModel
         self.lineModel = lineModel
@@ -45,16 +45,13 @@ public extension WWCaptchaView {
     }
     
     /// [重新繪製驗證碼](https://zh.wikipedia.org/zh-tw/验证码)
-    func redrawCaptcha() {
-        self.captchaString = randomString(stringModel: stringModel)
-        self.setNeedsDisplay()
-    }
-    
-    /// 重新繪製自訂驗證碼
-    /// - Parameter captchaString: 自訂驗證碼
-    func redrawCaptchaString(_ captchaString: String?) {
+    /// - Parameter captchaString: 自訂的驗證碼
+    func redrawCaptcha(_ captchaString: String? = nil) {
+        
+        defer { setNeedsDisplay() }
+        
+        if captchaString == nil { self.captchaString = randomString(stringModel: stringModel); return }
         self.captchaString = captchaString
-        self.setNeedsDisplay()
     }
 }
 
@@ -100,16 +97,41 @@ private extension WWCaptchaView {
             let point = characterPoint(with: index, totalCount: string.count, rect: rect, size: charSize)
             
             switch stringModel.textColorType {
-            case .mono(let color): 
-                drawCharacter(character, at: point, font: font, color: color)
-            case .random:
-                drawCharacter(character, at: point, font: font, color: UIColor._random())
-            case .gradient(let colors):
-                let label = characterLabel(character, frame: .init(origin: point, size: charSize), font: font, colors: colors)
-                captchaLabels.append(label)
-                layer.addSublayer(label.layer)
+            case .mono(let color, let isTransform): monoColorTextSetting(character, frame: .init(origin: point, size: charSize), font: font, textColor: color, isTransform: isTransform)
+            case .random(let isTransform): monoColorTextSetting(character, frame: .init(origin: point, size: charSize), font: font, textColor: UIColor._random(), isTransform: isTransform)
+            case .gradient(let colors, let isTransform): gradientColorTextSetting(character, frame: .init(origin: point, size: charSize), font: font, colors: colors, isTransform: isTransform)
             }
         }
+    }
+    
+    /// 單一顏色的文字處理
+    /// - Parameters:
+    ///   - character: NSString
+    ///   - frame: CGRect
+    ///   - font: UIFont
+    ///   - textColor: UIColor
+    ///   - isTransform: Bool
+    func monoColorTextSetting(_ character: NSString, frame: CGRect, font: UIFont, textColor: UIColor, isTransform: Bool) {
+        
+        if !isTransform { drawCharacter(character, at: frame.origin, font: font, textColor: textColor); return }
+        
+        let label = characterLabel(character, frame: frame, font: font, textColor: textColor, isTransform: isTransform)
+        captchaLabels.append(label)
+        layer.addSublayer(label.layer)
+    }
+    
+    /// 漸層顏色的文字處理
+    /// - Parameters:
+    ///   - character: NSString
+    ///   - frame: CGRect
+    ///   - font: UIFont
+    ///   - colors: [UIColor]
+    ///   - isTransform: Bool
+    func gradientColorTextSetting(_ character: NSString, frame: CGRect, font: UIFont, colors: [UIColor], isTransform: Bool) {
+        
+        let label = characterGradientLabel(character, frame: frame, font: font, colors: colors, isTransform: isTransform)
+        captchaLabels.append(label)
+        layer.addSublayer(label.layer)
     }
     
     /// 繪出單色文字
@@ -117,38 +139,60 @@ private extension WWCaptchaView {
     ///   - character: NSString
     ///   - point: CGPoint
     ///   - font: UIFont
-    ///   - color: UIColor
-    func drawCharacter(_ character: NSString, at point: CGPoint, font: UIFont, color: UIColor) {
+    ///   - textColor: UIColor
+    func drawCharacter(_ character: NSString, at point: CGPoint, font: UIFont, textColor: UIColor) {
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
-            .foregroundColor: color
+            .foregroundColor: textColor,
         ]
         
         character.draw(at: point, withAttributes: attributes)
     }
     
-    /// 產生文字Label (漸層 + Z軸旋轉)
+    /// 產生文字Label (Z軸旋轉)
     /// - Parameters:
+    ///   - character: NSString
     ///   - frame: CGRect
     ///   - font: UIFont
-    ///   - character: NSString
+    ///   - textColor: UIColor
+    ///   - isTransform: Bool
     /// - Returns: UILabel
-    func characterLabel(_ character: NSString, frame: CGRect, font: UIFont, colors: [UIColor]) -> UILabel {
+    func characterLabel(_ character: NSString, frame: CGRect, font: UIFont, textColor: UIColor, isTransform: Bool) -> UILabel {
         
         let label = UILabel()
+        let string = String(character)
+        let randomAngle = Double.pi * Double(Int.random(in: -50...50)) / 100.0
+        
+        _ = label._frame(frame)._text(string)._font(font)._textColor(textColor)._sizeToFit()
+        if isTransform { label.layer.transform = CATransform3DMakeRotation(randomAngle, 0, 0, 1) }
+        
+        return label
+    }
+    
+    /// 產生漸層顏色的文字Label (Z軸旋轉)
+    /// - Parameters:
+    ///   - character: NSString
+    ///   - frame: CGRect
+    ///   - font: UIFont
+    ///   - colors: [UIColor]
+    ///   - isTransform: Bool
+    /// - Returns: UILabel
+    func characterGradientLabel(_ character: NSString, frame: CGRect, font: UIFont, colors: [UIColor], isTransform: Bool) -> UILabel {
+        
+        let label = characterLabel(character, frame: frame, font: font, textColor: .black, isTransform: isTransform)
         let gradientLayer = CAGradientLayer()
         let textMaskLayer = CATextLayer()
         let string = String(character)
         let randomAngle = Double.pi * Double(Int.random(in: -50...50)) / 100.0
         
-        _ = label._frame(frame)._text(string)._font(font)._sizeToFit()
         _ = gradientLayer._frame(label.bounds)._colors(colors)._point(from: CGPoint(x: 0, y: 0.5), to: CGPoint(x: 1, y: 0.5))
         _ = textMaskLayer._frame(label.bounds)._string(string)._font(font)
         
         gradientLayer.mask = textMaskLayer
         label.layer.addSublayer(gradientLayer)
-        label.layer.transform = CATransform3DMakeRotation(randomAngle, 0, 0, 1)
+        
+        if isTransform { label.layer.transform = CATransform3DMakeRotation(randomAngle, 0, 0, 1) }
         
         return label
     }

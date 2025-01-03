@@ -144,6 +144,11 @@ extension UILabel {
     /// - Returns: Self
     func _font(_ font: UIFont) -> Self { self.font = font; return self }
     
+    /// 設定文字顏色
+    /// - Parameter textColor: UIColor
+    /// - Returns: Self
+    func _textColor(_ textColor: UIColor) -> Self { self.textColor = textColor; return self }
+    
     /// 設定成合身的尺寸
     /// - Returns: Self
     func _sizeToFit() -> Self { sizeToFit(); return self }
