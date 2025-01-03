@@ -6,16 +6,7 @@
 //
 
 import UIKit
-
-// MARK: - WWCaptchaViewDelegate
-public protocol WWCaptchaViewDelegate: AnyObject {
-    
-    /// 取得驗證碼
-    /// - Parameters:
-    ///   - view: WWCaptchaView
-    ///   - string: 驗證碼
-    func captcha(view: WWCaptchaView, string: String?)
-}
+import WWPrint
 
 // MARK: - 小工具
 @IBDesignable
@@ -24,6 +15,7 @@ open class WWCaptchaView: UIView {
     private var stringModel: RandomStringModel?     // 跟文字相關的設定值
     private var lineModel: RandomLineModel?         // 跟干擾線相關的設定值
     private var captchaString: String?              // 驗證碼
+    private var captchaLabels: [UILabel] = []       // 驗證碼Label
     
     private weak var delegate: WWCaptchaViewDelegate?
     
@@ -46,14 +38,11 @@ public extension WWCaptchaView {
     ///   - delegate: WWCaptchaViewDelegate?
     ///   - stringModel: RandomStringModel
     ///   - lineModel: RandomLineModel
-    func configure(delegate: WWCaptchaViewDelegate? = nil, stringModel: RandomStringModel = .init(digits: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", length: 4, font: UIFont.systemFont(ofSize: 18), upperBound: 5, color: .black), lineModel: RandomLineModel = .init(count: 6, width: 1.0)) {
+    func configure(delegate: WWCaptchaViewDelegate? = nil, stringModel: RandomStringModel = .init(digits: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", length: 4, font: UIFont.systemFont(ofSize: 18), upperBound: 5, textColorType: .mono(.black)), lineModel: RandomLineModel = .init(count: 6, width: 1.0)) {
         
         self.stringModel = stringModel
         self.lineModel = lineModel
         self.delegate = delegate
-        
-        captchaString = randomString(stringModel: stringModel)
-        backgroundColor = UIColor._random()
     }
     
     /// [重新繪製驗證碼](https://zh.wikipedia.org/zh-tw/验证码)
@@ -83,9 +72,7 @@ private extension WWCaptchaView {
         else {
             return
         }
-        
-        backgroundColor = UIColor._random()
-        
+                
         drawString(captchaString, rect: rect, stringModel: stringModel)
         drawInterferenceLine(rect: rect, lineModel: lineModel)
     }
@@ -97,13 +84,15 @@ private extension WWCaptchaView {
     ///   - stringModel: RandomStringModel
     func drawString(_ string: String?, rect: CGRect, stringModel: RandomStringModel) {
         
-        defer { delegate?.captcha(view: self, string: string) }
+        defer { delegate?.captchaView(self, string: string) }
         
         guard let string = string else { return }
         
-        let estimateCharSize = estimateCharacterSize("龘", font: stringModel.font)
+        let estimateCharSize = stringModel.font._estimateCharacterSize()
         let charSize = characterSize(string: string, rect: rect, estimateCharacterSize: estimateCharSize)
-                
+        
+        captchaLabels.forEach { $0.removeFromSuperview() }
+        
         for index in 0..<string.count {
             
             let point = characterPoint(with: index, totalCount: string.count, rect: rect, size: charSize)
@@ -111,13 +100,55 @@ private extension WWCaptchaView {
             let char = text.character(at: index)
             let character = NSString(format: "%C", char)
             let font = randomFont(stringModel: stringModel)
-            let attributes: [NSAttributedString.Key : Any] = [
-                .font: font,
-                .foregroundColor: stringModel.color
-            ]
             
-            character.draw(at: point, withAttributes: attributes)
+            switch stringModel.textColorType {
+            case .mono(let color): 
+                drawCharacter(character, at: point, font: font, color: color)
+            case .gradient(let colors):
+                let label = characterLabel(character, frame: .init(origin: point, size: charSize), font: font, colors: colors)
+                captchaLabels.append(label)
+                addSubview(label)
+            }
         }
+    }
+    
+    /// 繪出單色文字
+    /// - Parameters:
+    ///   - character: NSString
+    ///   - point: CGPoint
+    ///   - font: UIFont
+    ///   - color: UIColor
+    func drawCharacter(_ character: NSString, at point: CGPoint, font: UIFont, color: UIColor) {
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: color
+        ]
+        
+        character.draw(at: point, withAttributes: attributes)
+    }
+    
+    /// 產生漸層文字Label
+    /// - Parameters:
+    ///   - frame: CGRect
+    ///   - font: UIFont
+    ///   - character: NSString
+    /// - Returns: UILabel
+    func characterLabel(_ character: NSString, frame: CGRect, font: UIFont, colors: [UIColor]) -> UILabel {
+        
+        let label = UILabel()
+        let gradientLayer = CAGradientLayer()
+        let textMaskLayer = CATextLayer()
+        let string = String(character)
+        
+        _ = label._frame(frame)._text(string)._font(font)._sizeToFit()
+        _ = gradientLayer._frame(label.bounds)._colors(colors)._point(from: CGPoint(x: 0, y: 0.5), to: CGPoint(x: 1, y: 0.5))
+        _ = textMaskLayer._frame(label.bounds)._string(string)._font(font)
+        
+        gradientLayer.mask = textMaskLayer
+        label.layer.addSublayer(gradientLayer)
+        
+        return label
     }
     
     /// 繪製干擾線
@@ -171,10 +202,10 @@ private extension WWCaptchaView {
         
         point.x = randomSize.width + rect.size.width / CGFloat(totalCount) * CGFloat(index)
         point.y = randomSize.height
-        
+                
         return point
     }
-        
+    
     /// 計算每個字元顯示寬度 / 高度的位置
     /// - Parameter rect: CGRect
     func characterSize(string: String, rect: CGRect, estimateCharacterSize: CGSize) -> CGSize {
@@ -184,17 +215,7 @@ private extension WWCaptchaView {
         
         return CGSize(width: width, height: height)
     }
-    
-    /// 大約估計一個字元的大小
-    /// - Parameters:
-    ///   - character: Character
-    ///   - font: UIFont
-    /// - Returns: CGSize
-    func estimateCharacterSize(_ character: Character, font: UIFont) -> CGSize {
-        let size = NSString(string: "\(character)").size(withAttributes: [NSAttributedString.Key.font : font])
-        return size
-    }
-    
+        
     /// 隨機尺寸大小
     /// - Parameter maxSize: CGSize
     /// - Returns: CGSize
@@ -202,7 +223,7 @@ private extension WWCaptchaView {
         
         let width = Int._random(upperBound: Int(maxSize.width))
         let height = Int._random(upperBound: Int(maxSize.height))
-        
+                
         return CGSize(width: width, height: height)
     }
     
@@ -222,6 +243,6 @@ private extension WWCaptchaView {
     /// - Returns: UIFont
     func randomFont(stringModel: RandomStringModel) -> UIFont {
         let size = CGFloat(Int._random(upperBound: stringModel.upperBound)) + stringModel.font.pointSize
-        return stringModel.font.withSize(size)
+        return stringModel.font.withSize(CGFloat(size))
     }
 }

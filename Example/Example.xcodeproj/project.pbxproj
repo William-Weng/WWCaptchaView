@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3DAC9C1927016E78006663C2 /* WWPrint in Frameworks */ = {isa = PBXBuildFile; productRef = 3DAC9C1827016E78006663C2 /* WWPrint */; };
 		3DBCD87426F198EF00522E3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBCD87326F198EF00522E3B /* AppDelegate.swift */; };
 		3DBCD87826F198EF00522E3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBCD87726F198EF00522E3B /* ViewController.swift */; };
 		3DBCD87B26F198EF00522E3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87926F198EF00522E3B /* Main.storyboard */; };
 		3DBCD87D26F198F300522E3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87C26F198F300522E3B /* Assets.xcassets */; };
 		3DBCD88026F198F300522E3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87E26F198F300522E3B /* LaunchScreen.storyboard */; };
+		8136592A2D2691C600AEADAD /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 813659292D2691C600AEADAD /* WWCaptchaView */; };
 		816460DA2B9EC21300F47218 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 816460D92B9EC21300F47218 /* WWCaptchaView */; };
 		816460ED2B9EF2EE00F47218 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 816460EC2B9EF2EE00F47218 /* WWCaptchaView */; };
 		81C331702BAD2FF500A49D0D /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81C3316F2BAD2FF500A49D0D /* WWCaptchaView */; };
-		81C331732BAD543700A49D0D /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81C331722BAD543700A49D0D /* WWCaptchaView */; };
+		81FB67552D2797D600466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67542D2797D600466B2A /* WWCaptchaView */; };
+		81FB67582D27980E00466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67572D27980E00466B2A /* WWCaptchaView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +35,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DAC9C1927016E78006663C2 /* WWPrint in Frameworks */,
 				816460ED2B9EF2EE00F47218 /* WWCaptchaView in Frameworks */,
 				81C331702BAD2FF500A49D0D /* WWCaptchaView in Frameworks */,
-				81C331732BAD543700A49D0D /* WWCaptchaView in Frameworks */,
+				81FB67582D27980E00466B2A /* WWCaptchaView in Frameworks */,
+				8136592A2D2691C600AEADAD /* WWCaptchaView in Frameworks */,
+				81FB67552D2797D600466B2A /* WWCaptchaView in Frameworks */,
 				816460DA2B9EC21300F47218 /* WWCaptchaView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,11 +133,12 @@
 			);
 			name = Example;
 			packageProductDependencies = (
-				3DAC9C1827016E78006663C2 /* WWPrint */,
 				816460D92B9EC21300F47218 /* WWCaptchaView */,
 				816460EC2B9EF2EE00F47218 /* WWCaptchaView */,
 				81C3316F2BAD2FF500A49D0D /* WWCaptchaView */,
-				81C331722BAD543700A49D0D /* WWCaptchaView */,
+				813659292D2691C600AEADAD /* WWCaptchaView */,
+				81FB67542D2797D600466B2A /* WWCaptchaView */,
+				81FB67572D27980E00466B2A /* WWCaptchaView */,
 			);
 			productName = Example;
 			productReference = 3DBCD87026F198EF00522E3B /* Example.app */;
@@ -166,8 +169,7 @@
 			);
 			mainGroup = 3DBCD86726F198EF00522E3B;
 			packageReferences = (
-				3DAC9C1727016E78006663C2 /* XCRemoteSwiftPackageReference "WWPrint" */,
-				81C331712BAD543700A49D0D /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
+				81FB67562D27980E00466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
 			);
 			productRefGroup = 3DBCD87126F198EF00522E3B /* Products */;
 			projectDirPath = "";
@@ -274,7 +276,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -329,7 +331,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -411,29 +413,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3DAC9C1727016E78006663C2 /* XCRemoteSwiftPackageReference "WWPrint" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWPrint";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.0;
-			};
-		};
-		81C331712BAD543700A49D0D /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
+		81FB67562D27980E00466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWCaptchaView";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.4;
+				minimumVersion = 1.0.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3DAC9C1827016E78006663C2 /* WWPrint */ = {
+		813659292D2691C600AEADAD /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3DAC9C1727016E78006663C2 /* XCRemoteSwiftPackageReference "WWPrint" */;
-			productName = WWPrint;
+			productName = WWCaptchaView;
 		};
 		816460D92B9EC21300F47218 /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -447,9 +440,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WWCaptchaView;
 		};
-		81C331722BAD543700A49D0D /* WWCaptchaView */ = {
+		81FB67542D2797D600466B2A /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 81C331712BAD543700A49D0D /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
+			productName = WWCaptchaView;
+		};
+		81FB67572D27980E00466B2A /* WWCaptchaView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81FB67562D27980E00466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
 			productName = WWCaptchaView;
 		};
 /* End XCSwiftPackageProductDependency section */

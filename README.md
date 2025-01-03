@@ -8,12 +8,12 @@
 
 ![Example.png](./Example.png)
 
-![Example.gif](./Example.gif)
+![Example.gif](./Example.webp)
 
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWCaptchaView.git", .upToNextMajor(from: "1.0.2"))
+    .package(url: "https://github.com/William-Weng/WWCaptchaView.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -24,13 +24,16 @@ dependencies: [
 |redrawCaptcha()|重新繪製驗證碼|
 |redrawCaptchaString(_:)|重新繪製自訂驗證碼|
 
+### [WWCaptchaViewDelegate](https://ezgif.com/video-to-webp)
+|函式|功能|
+|-|-|
+|captchaView(_:string:)|取得驗證碼|
+
 ### Example
 ```swift
 import UIKit
-import WWPrint
 import WWCaptchaView
 
-// MARK: - ViewController
 final class ViewController: UIViewController {
     
     @IBOutlet weak var captchaLabel: UILabel!
@@ -39,9 +42,9 @@ final class ViewController: UIViewController {
     private let stringModel: WWCaptchaView.RandomStringModel = .init(
         digits: "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890甲乙丙丁戊己庚辛壬癸",
         length: 3,
-        font: .systemFont(ofSize: 56),
-        upperBound: 10,
-        color: .black
+        font: .systemFont(ofSize: 24),
+        upperBound: 36,
+        textColorType: .gradient([.red, .blue])
     )
     
     private let lineModel: WWCaptchaView.RandomLineModel = .init(
@@ -52,11 +55,12 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         captchaView.configure(delegate: self, stringModel: stringModel, lineModel: lineModel)
+        captchaView.redrawCaptcha()
     }
 }
 
-// MARK: - WWCaptchaViewDelegate
 extension ViewController: WWCaptchaViewDelegate {
-    func captcha(view: WWCaptchaView, string: String?) { captchaLabel.text = string }
+    
+    func captchaView(_ captchaView: WWCaptchaView, string: String?) { captchaLabel.text = string }
 }
 ```

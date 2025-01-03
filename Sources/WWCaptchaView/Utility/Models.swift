@@ -13,18 +13,18 @@ public extension WWCaptchaView {
     // MARK: - 跟文字相關的設定值
     class RandomStringModel {
         
-        var digits: String      // 驗證碼文字 => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-        var length: Int         // 驗證碼長度
-        var font: UIFont        // 驗證碼字型
-        var upperBound: Int     // 驗證碼文字浮動大小
-        var color: UIColor      // 驗證碼文字顏色
+        var digits: String                              // 驗證碼文字 => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        var length: Int                                 // 驗證碼長度
+        var font: UIFont                                // 驗證碼字型
+        var upperBound: Int                             // 驗證碼文字浮動大小
+        var textColorType: WWCaptchaView.TextColorType  // 驗證碼文字顏色
         
-        public init(digits: String, length: Int, font: UIFont, upperBound: Int, color: UIColor) {
+        public init(digits: String, length: Int, font: UIFont, upperBound: Int, textColorType: WWCaptchaView.TextColorType) {
             self.digits = digits
             self.length = length
             self.font = font
             self.upperBound = upperBound
-            self.color = color
+            self.textColorType = textColorType
         }
     }
     

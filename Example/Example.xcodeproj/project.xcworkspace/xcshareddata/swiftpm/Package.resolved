@@ -5,17 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWCaptchaView",
       "state" : {
-        "revision" : "093c1ccbf7e257be99a4cc467710fcbf9a196412",
-        "version" : "1.0.4"
-      }
-    },
-    {
-      "identity" : "wwprint",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWPrint",
-      "state" : {
-        "revision" : "8f5928f5d36624d77f8fc563fd8e31a59cfac6b6",
-        "version" : "1.3.1"
+        "revision" : "2e7f2216de64cd5a1b7f078a6e87840262f8c607",
+        "version" : "1.0.5"
       }
     }
   ],
