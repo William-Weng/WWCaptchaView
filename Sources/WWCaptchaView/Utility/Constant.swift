@@ -13,6 +13,7 @@ extension WWCaptchaView {
     /// 文字顏色類型
     public enum TextColorType {
         case mono(_ color: UIColor)         // 單色
+        case random                         // 隨機色
         case gradient(_ colors: [UIColor])  // 漸層色
     }
 }

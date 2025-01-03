@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 小工具
 @IBDesignable
@@ -21,7 +20,7 @@ open class WWCaptchaView: UIView {
     
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        redrawCaptcha()
+        delegate?.captchaView(self, didTouched: touches)
     }
     
     open override func draw(_ rect: CGRect) {
@@ -64,7 +63,7 @@ private extension WWCaptchaView {
     
     /// 重新繪製
     /// - Parameters:
-    ///   - rect: CGRect
+    ///   - rect: 整個View的位置大小
     func redraw(rect: CGRect) {
         
         guard let stringModel = stringModel,
@@ -72,7 +71,7 @@ private extension WWCaptchaView {
         else {
             return
         }
-                
+        
         drawString(captchaString, rect: rect, stringModel: stringModel)
         drawInterferenceLine(rect: rect, lineModel: lineModel)
     }
@@ -80,34 +79,35 @@ private extension WWCaptchaView {
     /// 繪製文字
     /// - Parameters:
     ///   - string: String
-    ///   - rect: CGRect
-    ///   - stringModel: RandomStringModel
+    ///   - rect: 整個View的位置大小
+    ///   - stringModel: 跟文字相關的設定值
     func drawString(_ string: String?, rect: CGRect, stringModel: RandomStringModel) {
         
         defer { delegate?.captchaView(self, string: string) }
         
         guard let string = string else { return }
         
-        let estimateCharSize = stringModel.font._estimateCharacterSize()
-        let charSize = characterSize(string: string, rect: rect, estimateCharacterSize: estimateCharSize)
-        
         captchaLabels.forEach { $0.removeFromSuperview() }
         
         for index in 0..<string.count {
             
-            let point = characterPoint(with: index, totalCount: string.count, rect: rect, size: charSize)
             let text = string as NSString
             let char = text.character(at: index)
             let character = NSString(format: "%C", char)
             let font = randomFont(stringModel: stringModel)
+            let estimateCharSize = font._estimateCharacterSize()
+            let charSize = characterSize(string: string, rect: rect, estimateCharacterSize: estimateCharSize)
+            let point = characterPoint(with: index, totalCount: string.count, rect: rect, size: charSize)
             
             switch stringModel.textColorType {
             case .mono(let color): 
                 drawCharacter(character, at: point, font: font, color: color)
+            case .random:
+                drawCharacter(character, at: point, font: font, color: UIColor._random())
             case .gradient(let colors):
                 let label = characterLabel(character, frame: .init(origin: point, size: charSize), font: font, colors: colors)
                 captchaLabels.append(label)
-                addSubview(label)
+                layer.addSublayer(label.layer)
             }
         }
     }
@@ -128,7 +128,7 @@ private extension WWCaptchaView {
         character.draw(at: point, withAttributes: attributes)
     }
     
-    /// 產生漸層文字Label
+    /// 產生文字Label (漸層 + Z軸旋轉)
     /// - Parameters:
     ///   - frame: CGRect
     ///   - font: UIFont
@@ -140,6 +140,7 @@ private extension WWCaptchaView {
         let gradientLayer = CAGradientLayer()
         let textMaskLayer = CATextLayer()
         let string = String(character)
+        let randomAngle = Double.pi * Double(Int.random(in: -50...50)) / 100.0
         
         _ = label._frame(frame)._text(string)._font(font)._sizeToFit()
         _ = gradientLayer._frame(label.bounds)._colors(colors)._point(from: CGPoint(x: 0, y: 0.5), to: CGPoint(x: 1, y: 0.5))
@@ -147,6 +148,7 @@ private extension WWCaptchaView {
         
         gradientLayer.mask = textMaskLayer
         label.layer.addSublayer(gradientLayer)
+        label.layer.transform = CATransform3DMakeRotation(randomAngle, 0, 0, 1)
         
         return label
     }
@@ -198,16 +200,18 @@ private extension WWCaptchaView {
     func characterPoint(with index: Int, totalCount: Int, rect: CGRect, size: CGSize) -> CGPoint {
         
         let randomSize = randomSize(size)
-        var point: CGPoint = .zero
-        
-        point.x = randomSize.width + rect.size.width / CGFloat(totalCount) * CGFloat(index)
-        point.y = randomSize.height
+        let x = randomSize.width + (rect.size.width / CGFloat(totalCount) * CGFloat(index))
+        let y = randomSize.height
                 
-        return point
+        return CGPoint(x: x, y: y)
     }
     
-    /// 計算每個字元顯示寬度 / 高度的位置
-    /// - Parameter rect: CGRect
+    /// 計算平均每個字元能放置的大小
+    /// - Parameters:
+    ///   - string: String
+    ///   - rect: 畫面的位置大小
+    ///   - estimateCharacterSize: 估計單一字元的大小
+    /// - Returns: CGSize
     func characterSize(string: String, rect: CGRect, estimateCharacterSize: CGSize) -> CGSize {
         
         let width = (rect.size.width / CGFloat(string.count)) - CGFloat(estimateCharacterSize.width)
@@ -215,7 +219,7 @@ private extension WWCaptchaView {
         
         return CGSize(width: width, height: height)
     }
-        
+    
     /// 隨機尺寸大小
     /// - Parameter maxSize: CGSize
     /// - Returns: CGSize

@@ -6,14 +6,12 @@
 - [CAPTCHA - Completely Automated Public Turing test to tell Computers and Humans Apart](https://zh.wikipedia.org/zh-tw/验证码)
 - [全自動區分電腦和人類的圖靈測試（英語：Completely Automated Public Turing test to tell Computers and Humans Apart，簡稱CAPTCHA），又稱驗證碼](https://www.jianshu.com/p/209f08f369a1)
 
-![Example.png](./Example.png)
-
 ![Example.gif](./Example.webp)
 
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWCaptchaView.git", .upToNextMajor(from: "1.1.0"))
+    .package(url: "https://github.com/William-Weng/WWCaptchaView.git", .upToNextMajor(from: "1.1.1"))
 ]
 ```
 
@@ -27,6 +25,7 @@ dependencies: [
 ### [WWCaptchaViewDelegate](https://ezgif.com/video-to-webp)
 |函式|功能|
 |-|-|
+|captchaView(_:didTouched:)|畫面被點到|
 |captchaView(_:string:)|取得驗證碼|
 
 ### Example
@@ -44,7 +43,7 @@ final class ViewController: UIViewController {
         length: 3,
         font: .systemFont(ofSize: 24),
         upperBound: 36,
-        textColorType: .gradient([.red, .blue])
+        textColorType: .random
     )
     
     private let lineModel: WWCaptchaView.RandomLineModel = .init(
@@ -61,6 +60,12 @@ final class ViewController: UIViewController {
 
 extension ViewController: WWCaptchaViewDelegate {
     
-    func captchaView(_ captchaView: WWCaptchaView, string: String?) { captchaLabel.text = string }
+    func captchaView(_ captchaView: WWCaptchaView, didTouched touchs: Set<UITouch>) {
+        captchaView.redrawCaptcha()
+    }
+    
+    func captchaView(_ captchaView: WWCaptchaView, string: String?) {
+        captchaLabel.text = string
+    }
 }
 ```

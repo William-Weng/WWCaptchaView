@@ -19,7 +19,7 @@ final class ViewController: UIViewController {
         length: 3,
         font: .systemFont(ofSize: 24),
         upperBound: 36,
-        textColorType: .gradient([.red, .blue])
+        textColorType: .random
     )
     
     private let lineModel: WWCaptchaView.RandomLineModel = .init(
@@ -37,5 +37,11 @@ final class ViewController: UIViewController {
 // MARK: - WWCaptchaViewDelegate
 extension ViewController: WWCaptchaViewDelegate {
     
-    func captchaView(_ captchaView: WWCaptchaView, string: String?) { captchaLabel.text = string }
+    func captchaView(_ captchaView: WWCaptchaView, didTouched touchs: Set<UITouch>) {
+        captchaView.redrawCaptcha()
+    }
+    
+    func captchaView(_ captchaView: WWCaptchaView, string: String?) {
+        captchaLabel.text = string
+    }
 }
