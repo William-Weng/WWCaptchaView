@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Demo" translatesAutoresizingMaskIntoConstraints="NO" id="4Yf-o4-71C">
-                                <rect key="frame" x="32" y="321" width="350" height="302"/>
+                                <rect key="frame" x="32" y="273" width="350" height="350"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="b9P-JG-Hj4">
                                 <rect key="frame" x="32" y="273" width="350" height="350"/>
@@ -47,12 +47,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="b9P-JG-Hj4" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="2Un-v3-7pM"/>
-                            <constraint firstItem="4Yf-o4-71C" firstAttribute="trailing" secondItem="Ivq-ij-h2S" secondAttribute="trailing" id="8pM-bc-DkQ"/>
+                            <constraint firstItem="4Yf-o4-71C" firstAttribute="trailing" secondItem="b9P-JG-Hj4" secondAttribute="trailing" id="Q99-GG-LyF"/>
+                            <constraint firstItem="4Yf-o4-71C" firstAttribute="bottom" secondItem="b9P-JG-Hj4" secondAttribute="bottom" id="X3j-vU-L0L"/>
                             <constraint firstItem="b9P-JG-Hj4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dRi-h1-BVS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="b9P-JG-Hj4" secondAttribute="trailing" constant="32" id="fbC-3g-Fm4"/>
-                            <constraint firstItem="4Yf-o4-71C" firstAttribute="leading" secondItem="Ivq-ij-h2S" secondAttribute="leading" id="jET-WO-cv1"/>
-                            <constraint firstItem="4Yf-o4-71C" firstAttribute="top" secondItem="Ivq-ij-h2S" secondAttribute="top" id="n0J-UW-cYR"/>
-                            <constraint firstItem="4Yf-o4-71C" firstAttribute="bottom" secondItem="Ivq-ij-h2S" secondAttribute="bottom" id="z6Y-io-WZt"/>
+                            <constraint firstItem="4Yf-o4-71C" firstAttribute="top" secondItem="b9P-JG-Hj4" secondAttribute="top" id="tVI-yh-xYS"/>
+                            <constraint firstItem="4Yf-o4-71C" firstAttribute="leading" secondItem="b9P-JG-Hj4" secondAttribute="leading" id="tv3-XO-l0d"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nvs-zi-2RQ"/>

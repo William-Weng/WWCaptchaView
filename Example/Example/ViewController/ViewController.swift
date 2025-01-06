@@ -19,7 +19,7 @@ final class ViewController: UIViewController {
         length: 3,
         font: .systemFont(ofSize: 24),
         upperBound: 36,
-        textColorType: .random(true)
+        textColorType: .random()
     )
     
     private let lineModel: WWCaptchaView.RandomLineModel = .init(

@@ -179,7 +179,7 @@ private extension WWCaptchaView {
         
         gradientLayer.mask = textMaskLayer
         label.layer.addSublayer(gradientLayer)
-                
+        
         return label
     }
     
