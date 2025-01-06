@@ -12,6 +12,8 @@
 		3DBCD87B26F198EF00522E3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87926F198EF00522E3B /* Main.storyboard */; };
 		3DBCD87D26F198F300522E3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87C26F198F300522E3B /* Assets.xcassets */; };
 		3DBCD88026F198F300522E3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DBCD87E26F198F300522E3B /* LaunchScreen.storyboard */; };
+		8113C9352D2B737B00CFEC14 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 8113C9342D2B737B00CFEC14 /* WWCaptchaView */; };
+		8113C9382D2B76C300CFEC14 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 8113C9372D2B76C300CFEC14 /* WWCaptchaView */; };
 		8136592A2D2691C600AEADAD /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 813659292D2691C600AEADAD /* WWCaptchaView */; };
 		816460DA2B9EC21300F47218 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 816460D92B9EC21300F47218 /* WWCaptchaView */; };
 		816460ED2B9EF2EE00F47218 /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 816460EC2B9EF2EE00F47218 /* WWCaptchaView */; };
@@ -22,7 +24,6 @@
 		81FB67672D27CB5600466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67662D27CB5600466B2A /* WWCaptchaView */; };
 		81FB676D2D27D23F00466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB676C2D27D23F00466B2A /* WWCaptchaView */; };
 		81FB67732D27D4F200466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67722D27D4F200466B2A /* WWCaptchaView */; };
-		81FB67762D27DAB200466B2A /* WWCaptchaView in Frameworks */ = {isa = PBXBuildFile; productRef = 81FB67752D27DAB200466B2A /* WWCaptchaView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,10 +43,11 @@
 			files = (
 				816460ED2B9EF2EE00F47218 /* WWCaptchaView in Frameworks */,
 				81FB67612D27BD5500466B2A /* WWCaptchaView in Frameworks */,
+				8113C9382D2B76C300CFEC14 /* WWCaptchaView in Frameworks */,
 				81FB67672D27CB5600466B2A /* WWCaptchaView in Frameworks */,
 				81C331702BAD2FF500A49D0D /* WWCaptchaView in Frameworks */,
 				81FB675B2D279DFC00466B2A /* WWCaptchaView in Frameworks */,
-				81FB67762D27DAB200466B2A /* WWCaptchaView in Frameworks */,
+				8113C9352D2B737B00CFEC14 /* WWCaptchaView in Frameworks */,
 				81FB676D2D27D23F00466B2A /* WWCaptchaView in Frameworks */,
 				8136592A2D2691C600AEADAD /* WWCaptchaView in Frameworks */,
 				81FB67552D2797D600466B2A /* WWCaptchaView in Frameworks */,
@@ -153,7 +155,8 @@
 				81FB67662D27CB5600466B2A /* WWCaptchaView */,
 				81FB676C2D27D23F00466B2A /* WWCaptchaView */,
 				81FB67722D27D4F200466B2A /* WWCaptchaView */,
-				81FB67752D27DAB200466B2A /* WWCaptchaView */,
+				8113C9342D2B737B00CFEC14 /* WWCaptchaView */,
+				8113C9372D2B76C300CFEC14 /* WWCaptchaView */,
 			);
 			productName = Example;
 			productReference = 3DBCD87026F198EF00522E3B /* Example.app */;
@@ -184,7 +187,7 @@
 			);
 			mainGroup = 3DBCD86726F198EF00522E3B;
 			packageReferences = (
-				81FB67742D27DAB100466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
+				8113C9362D2B76C300CFEC14 /* XCRemoteSwiftPackageReference "WWCaptchaView" */,
 			);
 			productRefGroup = 3DBCD87126F198EF00522E3B /* Products */;
 			projectDirPath = "";
@@ -430,7 +433,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		81FB67742D27DAB100466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
+		8113C9362D2B76C300CFEC14 /* XCRemoteSwiftPackageReference "WWCaptchaView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWCaptchaView";
 			requirement = {
@@ -441,6 +444,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		8113C9342D2B737B00CFEC14 /* WWCaptchaView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWCaptchaView;
+		};
+		8113C9372D2B76C300CFEC14 /* WWCaptchaView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8113C9362D2B76C300CFEC14 /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
+			productName = WWCaptchaView;
+		};
 		813659292D2691C600AEADAD /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWCaptchaView;
@@ -479,11 +491,6 @@
 		};
 		81FB67722D27D4F200466B2A /* WWCaptchaView */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = WWCaptchaView;
-		};
-		81FB67752D27DAB200466B2A /* WWCaptchaView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81FB67742D27DAB100466B2A /* XCRemoteSwiftPackageReference "WWCaptchaView" */;
 			productName = WWCaptchaView;
 		};
 /* End XCSwiftPackageProductDependency section */

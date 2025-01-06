@@ -153,11 +153,10 @@ private extension WWCaptchaView {
     /// - Returns: UILabel
     func characterLabel(_ character: NSString, frame: CGRect, font: UIFont, textColor: UIColor, isTransform: Bool) -> UILabel {
         
-        let label = UILabel()
         let string = String(character)
-        let randomAngle = Double.pi * Double(Int.random(in: -50...50)) / 100.0
+        let randomAngle: Double = .pi * .random(in: -0.5...0.5)
+        let label = UILabel()._frame(frame)._text(string)._font(font)._textColor(textColor)._sizeToFit()
         
-        _ = label._frame(frame)._text(string)._font(font)._textColor(textColor)._sizeToFit()
         if isTransform { label.layer.transform = CATransform3DMakeRotation(randomAngle, 0, 0, 1) }
         
         return label
@@ -173,20 +172,14 @@ private extension WWCaptchaView {
     /// - Returns: UILabel
     func characterGradientLabel(_ character: NSString, frame: CGRect, font: UIFont, colors: [UIColor], isTransform: Bool) -> UILabel {
         
-        let label = characterLabel(character, frame: frame, font: font, textColor: .black, isTransform: isTransform)
-        let gradientLayer = CAGradientLayer()
-        let textMaskLayer = CATextLayer()
         let string = String(character)
-        let randomAngle = Double.pi * Double(Int.random(in: -50...50)) / 100.0
-        
-        _ = gradientLayer._frame(label.bounds)._colors(colors)._point(from: CGPoint(x: 0, y: 0.5), to: CGPoint(x: 1, y: 0.5))
-        _ = textMaskLayer._frame(label.bounds)._string(string)._font(font)
+        let label = characterLabel(character, frame: frame, font: font, textColor: .black, isTransform: isTransform)
+        let gradientLayer = CAGradientLayer()._frame(label.bounds)._colors(colors)._point(from: CGPoint(x: 0, y: 0.5), to: CGPoint(x: 1, y: 0.5))
+        let textMaskLayer = CATextLayer()._frame(label.bounds)._string(string)._font(font)
         
         gradientLayer.mask = textMaskLayer
         label.layer.addSublayer(gradientLayer)
-        
-        if isTransform { label.layer.transform = CATransform3DMakeRotation(randomAngle, 0, 0, 1) }
-        
+                
         return label
     }
     
